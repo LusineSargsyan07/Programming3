@@ -1,7 +1,6 @@
-class PiranhaFlower {
+class PiranhaFlower extends LivingCreature {
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
+        super(x, y)
         this.energy = 35;
         this.directions = [];
     }
@@ -34,13 +33,13 @@ class PiranhaFlower {
 
         return found;
     }
- 
+
     eat() {
         let foods = this.chooseCell(4)
         let food = random(foods)
 
         if (food) {
-            this.energy ++
+            this.energy++
             let newX = food[0]
             let newY = food[1]
 
@@ -61,7 +60,7 @@ class PiranhaFlower {
             //     this.move()
             // }
 
-        }else{
+        } else {
             this.move()
         }
 

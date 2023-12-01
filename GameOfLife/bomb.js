@@ -1,7 +1,6 @@
-class Bomb {
+class Bomb extends LivingCreature {
   constructor(x, y) {
-    this.y = y;
-    this.x = x;
+    super(x, y)
     this.energy = 35;
     this.direction = [];
   }
