@@ -1,4 +1,5 @@
-class PiranhaFlower extends LivingCreature {
+let LivingCreature = require("./LivingCraeture")
+module.exports = class PiranhaFlower extends LivingCreature {
     constructor(x, y) {
         super(x, y)
         this.energy = 35;
@@ -20,7 +21,7 @@ class PiranhaFlower extends LivingCreature {
   
     eat() {
         let foods = this.chooseCell(4)
-        let food = random(foods)
+        let food = foods(Math.floor(Math.random()+ foods.length))
 
         if (food) {
             this.energy++
@@ -51,7 +52,7 @@ class PiranhaFlower extends LivingCreature {
     }
     move() {
         let emptyCells = this.chooseCell(0)
-        let newCell = random(emptyCells)
+        let newCell = emptyCells(Math.floor(Math.random()+ emptyCells.length))
 
         if (newCell) {
             this.energy--
