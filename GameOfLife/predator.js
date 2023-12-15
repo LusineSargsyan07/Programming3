@@ -42,7 +42,7 @@ module.exports = class Predator extends LivingCreature {
 
   mull() {
     let emptyCell = this.chooseCell(0);
-    let newCell = emptyCell(Math.floor(Math.random()+ emptyCell.length))
+    let newCell = emptyCell[Math.floor(Math.random()+ emptyCell.length)]
 
     if (newCell) {
       let newX = newCell[0];
@@ -97,7 +97,7 @@ module.exports = class Predator extends LivingCreature {
 
   move() {
     let emptyCells = this.chooseCell(0)
-    let newCell =emptyCells(Math.floor(Math.random()+ emptyCells.length))
+    let newCell =emptyCells[Math.floor(Math.random()+ emptyCells.length)]
 
     if (newCell) {
       this.energy--

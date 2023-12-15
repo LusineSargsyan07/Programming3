@@ -45,7 +45,7 @@ module.exports = class Bomb extends LivingCreature {
 
   move() {
     let emptyCell = this.chooseCell(0);
-    let newCell = emptyCell(Math.floor(Math.random()+ emptyCell.length))
+    let newCell = emptyCell[Math.floor(Math.random()+ emptyCell.length)]
     if (newCell) {
       this.energy--
       let newX = newCell[0];
@@ -64,7 +64,7 @@ module.exports = class Bomb extends LivingCreature {
 
   eat() {
     let emptyCell = this.chooseCell(1, 2, 3);
-    let newCell = emptyCell(Math.floor(Math.random()+ emptyCell.length))
+    let newCell = emptyCell[Math.floor(Math.random()+ emptyCell.length)]
 
     if (newCell) {
       this.energy++;
@@ -103,7 +103,7 @@ module.exports = class Bomb extends LivingCreature {
 
   boom() {
     let emptyCell = this.chooseCell(2);
-    let newCell = emptyCell(Math.floor(Math.random()+ emptyCell.length))
+    let newCell = emptyCell[Math.floor(Math.random()+ emptyCell.length)]
 
     if (newCell) {
 

@@ -21,7 +21,7 @@ module.exports = class PiranhaFlower extends LivingCreature {
   
     eat() {
         let foods = this.chooseCell(4)
-        let food = foods(Math.floor(Math.random()+ foods.length))
+        let food = foods[Math.floor(Math.random()+ foods.length)]
 
         if (food) {
             this.energy++
@@ -52,7 +52,7 @@ module.exports = class PiranhaFlower extends LivingCreature {
     }
     move() {
         let emptyCells = this.chooseCell(0)
-        let newCell = emptyCells(Math.floor(Math.random()+ emptyCells.length))
+        let newCell = emptyCells[Math.floor(Math.random()+ emptyCells.length)]
 
         if (newCell) {
             this.energy--
