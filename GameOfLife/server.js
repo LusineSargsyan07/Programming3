@@ -96,7 +96,8 @@ let Grass = require("./grass")
 let GrassEater = require("./grassEater")
 let Predator = require("./predator")
 let Bomb = require("./bomb")
-let PiranhaFlower = require("./piranhaFlower")
+let PiranhaFlower = require("./piranhaFlower");
+const { log } = require("console");
 
 function createObject(matrix){
     for (let y = 0; y < matrix.length; y++) {
@@ -158,9 +159,44 @@ function game(){
 
 }
 
-setInterval(game, 500)
+setInterval(game, 300)
 
+function AddGrass(){
+    for(let i = 0;  i < 7; i++){
+        let x = Math.floor(Math.random() * matrixSize)
+        let y = Math.floor(Math.random() * matrixSize)
 
-io.on("connection", function(){
+        if(matrix[y][x] == 0){
+              matrix[y][x] = 1
+             let grass = new Grass(x,y)
+             grassArr.push(grass)
+        }
+
+    }
+    io.sockets.emit("emit matrix", matrix)
+
+}
+
+var statistics = {
+    
+
+}
+
+setInterval(function (){
+
+    statistics.grass = grassArr.length
+    statistics.GrassEater = grassEaterArr.length
+    statistics.piranhaFlower = piranhaFlowerArr.length
+    statistics.predator = predatorArr.length
+    statistics.grass = grassArr.length
+    statistics.bomb = bombArr.length
+
+    fs.writeFile("statistics.json", JSON.stringify(statistics), function(err){
+        // console.log("game of life statistics")
+    })
+}, 1000)
+
+io.on("connection", function(socket){
     createObject(matrix)
+    socket.on("addGrass", AddGrass)
 })

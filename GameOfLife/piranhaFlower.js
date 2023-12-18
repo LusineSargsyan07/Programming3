@@ -19,9 +19,13 @@ module.exports = class PiranhaFlower extends LivingCreature {
         ];
     }
   
+    chooseCell(char){
+        this.getNewCoordinates()
+        return super.chooseCell(char)
+    }
     eat() {
         let foods = this.chooseCell(4)
-        let food = foods[Math.floor(Math.random()+ foods.length)]
+        let food = foods[Math.floor(Math.random()* foods.length)]
 
         if (food) {
             this.energy++
@@ -50,10 +54,11 @@ module.exports = class PiranhaFlower extends LivingCreature {
         }
 
     }
+
     move() {
         let emptyCells = this.chooseCell(0)
-        let newCell = emptyCells[Math.floor(Math.random()+ emptyCells.length)]
-
+        let newCell = emptyCells[Math.floor(Math.random()* emptyCells.length)]
+        console.log(newCell);
         if (newCell) {
             this.energy--
             let newX = newCell[0]
