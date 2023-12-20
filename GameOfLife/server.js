@@ -163,13 +163,95 @@ setInterval(game, 300)
 
 function AddGrass(){
     for(let i = 0;  i < 7; i++){
-        let x = Math.floor(Math.random() * matrixSize)
-        let y = Math.floor(Math.random() * matrixSize)
+        let x = Math.floor(Math.random() * matrix.length)
+        let y = Math.floor(Math.random() * matrix.length)
 
         if(matrix[y][x] == 0){
               matrix[y][x] = 1
              let grass = new Grass(x,y)
              grassArr.push(grass)
+        }
+
+    }
+    io.sockets.emit("emit matrix", matrix)
+
+}
+
+function AddGrassEater(){
+    for(let i = 0;  i < 7; i++){
+        let x = Math.floor(Math.random() * matrix.length)
+        let y = Math.floor(Math.random() * matrix.length)
+
+        if(matrix[y][x] == 0){
+              matrix[y][x] = 2
+             let grassEater = new GrassEater(x,y)
+             grassEaterArr.push(grassEater)
+        }
+
+    }
+    io.sockets.emit("emit matrix", matrix)
+
+}
+
+
+function AddBomb(){
+    for(let i = 0;  i < 7; i++){
+        let x = Math.floor(Math.random() * matrix.length)
+        let y = Math.floor(Math.random() * matrix.length)
+
+        if(matrix[y][x] == 0){
+              matrix[y][x] = 2
+             let bomb = new Bomb(x,y)
+             bombArr.push(bomb)
+        }
+
+    }
+    io.sockets.emit("emit matrix", matrix)
+
+}
+
+
+function AddBomb(){
+    for(let i = 0;  i < 7; i++){
+        let x = Math.floor(Math.random() * matrix.length)
+        let y = Math.floor(Math.random() * matrix.length)
+
+        if(matrix[y][x] == 0){
+              matrix[y][x] = 2
+             let bomb = new Bomb(x,y)
+             bombArr.push(bomb)
+        }
+
+    }
+    io.sockets.emit("emit matrix", matrix)
+
+}
+
+function AddPiranhaFlower(){
+    for(let i = 0;  i < 7; i++){
+        let x = Math.floor(Math.random() * matrix.length)
+        let y = Math.floor(Math.random() * matrix.length)
+
+        if(matrix[y][x] == 0){
+              matrix[y][x] = 2
+             let piranhaFlower = new PiranhaFlower(x,y)
+             piranhaFlowerArr.push(piranhaFlower)
+        }
+
+    }
+    io.sockets.emit("emit matrix", matrix)
+
+}
+
+function AddPredator(){
+    for(let i = 0;  i < 7; i++){
+        let x = Math.floor(Math.random() * matrix.length)
+        let y = Math.floor(Math.random() * matrix.length)
+
+        if(matrix[y][x] == 0){
+              matrix[y][x] = 2
+             let predator = new Predator(x,y)
+             predatorArr.push(predator)
         }
 
     }
@@ -192,7 +274,7 @@ setInterval(function (){
     statistics.bomb = bombArr.length
 
     fs.writeFile("statistics.json", JSON.stringify(statistics), function(err){
-        // console.log("game of life statistics")
+        console.log("game of life statistics")
     })
 }, 1000)
 
@@ -200,3 +282,20 @@ io.on("connection", function(socket){
     createObject(matrix)
     socket.on("addGrass", AddGrass)
 })
+io.on("connection", function(socket){
+    createObject(matrix)
+    socket.on("addGrassEater", AddGrassEater)
+})
+io.on("connection", function(socket){
+    createObject(matrix)
+    socket.on("addBomb", AddBomb)
+})
+io.on("connection", function(socket){
+    createObject(matrix)
+    socket.on("addPiranhaFlower", AddPiranhaFlower)
+})
+io.on("connection", function(socket){
+    createObject(matrix)
+    socket.on("addPredator", AddPredator)
+})
+
