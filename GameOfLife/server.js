@@ -83,11 +83,11 @@ io.sockets.emit("emit matrix", matrix)
 
 // charactor Arrays
 
- grassArr = [];
- grassEaterArr = [];
- predatorArr = [];
- bombArr = [];
- piranhaFlowerArr = [];
+grassArr = [];
+grassEaterArr = [];
+predatorArr = [];
+bombArr = [];
+piranhaFlowerArr = [];
 
 
 //  modules
@@ -99,7 +99,7 @@ let Bomb = require("./bomb")
 let PiranhaFlower = require("./piranhaFlower");
 const { log } = require("console");
 
-function createObject(matrix){
+function createObject(matrix) {
     for (let y = 0; y < matrix.length; y++) {
         for (let x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 1) {
@@ -135,7 +135,7 @@ function createObject(matrix){
 
 }
 
-function game(){
+function game() {
     for (let i in grassArr) {
         grassArr[i].mull()
     }
@@ -155,21 +155,42 @@ function game(){
         piranhaFlowerArr[i].eat()
     }
 
-    io.sockets.emit("emit matrix", matrix) 
+    io.sockets.emit("emit matrix", matrix)
 
 }
 
 setInterval(game, 300)
 
-function AddGrass(){
-    for(let i = 0;  i < 7; i++){
+var weath;
+
+function Winter() {
+    weath = "winter";
+    io.sockets.emit("Winter", weath);
+}
+
+function Summer() {
+    weath = "summer";
+    io.sockets.emit("Summer", weath);
+}
+
+function Spring() {
+    weath = "spring";
+    io.sockets.emit("Spring", weath);
+}
+function Autumn() {
+    weath = "autumn";
+    io.sockets.emit("Autumn", weath);
+}
+
+function AddGrass() {
+    for (let i = 0; i < 7; i++) {
         let x = Math.floor(Math.random() * matrix.length)
         let y = Math.floor(Math.random() * matrix.length)
 
-        if(matrix[y][x] == 0){
-              matrix[y][x] = 1
-             let grass = new Grass(x,y)
-             grassArr.push(grass)
+        if (matrix[y][x] == 0) {
+            matrix[y][x] = 1
+            let grass = new Grass(x, y)
+            grassArr.push(grass)
         }
 
     }
@@ -177,15 +198,15 @@ function AddGrass(){
 
 }
 
-function AddGrassEater(){
-    for(let i = 0;  i < 7; i++){
+function AddGrassEater() {
+    for (let i = 0; i < 7; i++) {
         let x = Math.floor(Math.random() * matrix.length)
         let y = Math.floor(Math.random() * matrix.length)
 
-        if(matrix[y][x] == 0){
-              matrix[y][x] = 2
-             let grassEater = new GrassEater(x,y)
-             grassEaterArr.push(grassEater)
+        if (matrix[y][x] == 0) {
+            matrix[y][x] = 2
+            let grassEater = new GrassEater(x, y)
+            grassEaterArr.push(grassEater)
         }
 
     }
@@ -194,15 +215,15 @@ function AddGrassEater(){
 }
 
 
-function AddBomb(){
-    for(let i = 0;  i < 7; i++){
+function AddBomb() {
+    for (let i = 0; i < 7; i++) {
         let x = Math.floor(Math.random() * matrix.length)
         let y = Math.floor(Math.random() * matrix.length)
 
-        if(matrix[y][x] == 0){
-              matrix[y][x] = 4
-             let bomb = new Bomb(x,y)
-             bombArr.push(bomb)
+        if (matrix[y][x] == 0) {
+            matrix[y][x] = 4
+            let bomb = new Bomb(x, y)
+            bombArr.push(bomb)
         }
 
     }
@@ -212,15 +233,15 @@ function AddBomb(){
 
 
 
-function AddPiranhaFlower(){
-    for(let i = 0;  i < 7; i++){
+function AddPiranhaFlower() {
+    for (let i = 0; i < 7; i++) {
         let x = Math.floor(Math.random() * matrix.length)
         let y = Math.floor(Math.random() * matrix.length)
 
-        if(matrix[y][x] == 0){
-              matrix[y][x] = 5
-             let piranhaFlower = new PiranhaFlower(x,y)
-             piranhaFlowerArr.push(piranhaFlower)
+        if (matrix[y][x] == 0) {
+            matrix[y][x] = 5
+            let piranhaFlower = new PiranhaFlower(x, y)
+            piranhaFlowerArr.push(piranhaFlower)
         }
 
     }
@@ -228,15 +249,15 @@ function AddPiranhaFlower(){
 
 }
 
-function AddPredator(){
-    for(let i = 0;  i < 7; i++){
+function AddPredator() {
+    for (let i = 0; i < 7; i++) {
         let x = Math.floor(Math.random() * matrix.length)
         let y = Math.floor(Math.random() * matrix.length)
 
-        if(matrix[y][x] == 0){
-              matrix[y][x] = 3
-             let predator = new Predator(x,y)
-             predatorArr.push(predator)
+        if (matrix[y][x] == 0) {
+            matrix[y][x] = 3
+            let predator = new Predator(x, y)
+            predatorArr.push(predator)
         }
 
     }
@@ -245,11 +266,11 @@ function AddPredator(){
 }
 
 var statistics = {
-    
+
 
 }
 
-setInterval(function (){
+setInterval(function () {
 
     statistics.grass = grassArr.length
     statistics.GrassEater = grassEaterArr.length
@@ -258,15 +279,20 @@ setInterval(function (){
     statistics.grass = grassArr.length
     statistics.bomb = bombArr.length
 
-    fs.writeFile("statistics.json", JSON.stringify(statistics), function(err){
-        console.log("game of life statistics")
+    fs.writeFile("statistics.json", JSON.stringify(statistics), function (err) {
+        // console.log("game of life statistics")
     })
 }, 1000)
 
-io.on("connection", function(socket){
+io.on("connection", function (socket) {
     createObject(matrix)
+    
+    socket.on("spring", Spring);
+    socket.on("summer", Summer);
+    socket.on("autumn", Autumn);
+    socket.on("winter", Winter);
     socket.on("addGrass", AddGrass)
-    socket.on("addGrassEater", AddGrassEater)
+    socket.on("addGrassEAter", AddGrassEater)
     socket.on("addBomb", AddBomb)
     socket.on("addPiranhaFlower", AddPiranhaFlower)
     socket.on("addPredator", AddPredator)

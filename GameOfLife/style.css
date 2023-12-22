@@ -1,13 +1,16 @@
 canvas{
     margin-left: 30%;
+    margin-top: -40%;
+    position: absolute;
 }
 body {
-    background-color: rgb(175, 230, 173);
+    background-color: rgb(201, 178, 152);
   }
   
   h1 {
-    color: #108f30;
+    color: #6e5339;
     text-align: center;
+    font-style: inherit;
   }
   
   p {
@@ -16,55 +19,74 @@ body {
   }
 
 
- 
 
-/* CSS */
-.button-3 {
-  appearance: none;
-  background-color: #f01919;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 6px;
-  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
-  box-sizing: border-box;
-  color: #fff;
+
+.button-74 {
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #422800;
   cursor: pointer;
   display: inline-block;
-  font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
-  font-size: 14px;
   font-weight: 600;
-  line-height: 20px;
-  padding: 6px 16px;
-  position: relative;
+  font-size: 18px;
+  padding: 0 18px;
+  line-height: 50px;
   text-align: center;
   text-decoration: none;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  vertical-align: middle;
-  white-space: nowrap;
 }
 
-.button-3:focus:not(:focus-visible):not(.focus-visible) {
-  box-shadow: none;
-  outline: none;
+.button-74:hover {
+  background-color: #fff;
 }
 
-.button-3:hover {
-  background-color: #2c974b;
+.button-74:active {
+  box-shadow: #422800 2px 2px 0 0;
+  transform: translate(2px, 2px);
 }
 
-.button-3:focus {
-  box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
-  outline: none;
+@media (min-width: 768px) {
+  .button-74 {
+    min-width: 120px;
+    padding: 0 25px;
+  }
 }
 
-.button-3:disabled {
-  background-color: #94d3a2;
-  border-color: rgba(27, 31, 35, .1);
-  color: rgba(255, 255, 255, .8);
-  cursor: default;
+.button-74 {
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #422800;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 0 18px;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
-.button-3:active {
-  background-color: #298e46;
-  box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;}
+.button-74:hover {
+  background-color: #fff;
+}
+
+.button-74:active {
+  box-shadow: #422800 2px 2px 0 0;
+  transform: translate(2px, 2px);
+}
+
+@media (min-width: 768px) {
+  .button-74 {
+    min-width: 120px;
+    padding: 0 25px;
+  }
+}
