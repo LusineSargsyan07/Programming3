@@ -10,16 +10,18 @@
     <script src="socket.io/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.7.0/lib/p5.js"></script>
     <script src="script.js"></script>
+     <link rel="stylesheet" href="style.css">
+     <h1>GameOfLife</h1>
+
 
 
 </head>
 
 <body>
-        <button class = "grass" onclick="AddGrass()"> Add Grass</button><br>
-        <button class = "AddGrassEater" onclick="AddGrassEater()"> Add GrassEater</button><br>
-        <button class = "predator" onclick="AddPredator()"> Add Predator</button><br>
-        <button class = "bomb" onclick="AddBomb()" > Add Bomb</button><br>
-        <button class = "piranhaFlower" onclick="AddPiranhaFlower()"> Add PiranhaFlower</button><br>
-</body>
+    <button class="button-3" role="button" onclick="AddGrass()">Add Grass</button><br>
+    <button class="button-3" style="background-color: #19f056; color: rgb(255, 253, 253);" role="button" onclick="AddGrassEater() ">Add GrassEater</button><br>
+    <button class="button-3" style="background-color: #f01919; color: rgb(255, 255, 255);" role="button" onclick="AddPredator() ">Add Predator</button><br>
+    <button class="button-3" style="background-color: #19f056; color: rgb(255, 255, 255);" role="button" onclick="AddBomb() ">Add Bomb</button><br>
+    <button class="button-3" style="background-color: #f01919; color: rgb(255, 255, 255);" role="button" onclick="AddPiranhaFlower() ">Add PiranhaFlower</button><br>
 
 </html>

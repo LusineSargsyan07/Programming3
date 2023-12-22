@@ -47,3 +47,18 @@ function AddGrass(){
     socket.emit("addGrass")
 }
 
+function AddGrassEater(){
+    socket.emit("addGrassEAter")
+}
+
+function AddPredator(){
+    socket.emit("addPredator")
+}
+
+function AddBomb(){
+    socket.emit("addBomb")
+}
+
+function AddPiranhaFlower(){
+    socket.emit("addPirahaFlower")
+}

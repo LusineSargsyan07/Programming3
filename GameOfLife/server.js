@@ -200,7 +200,7 @@ function AddBomb(){
         let y = Math.floor(Math.random() * matrix.length)
 
         if(matrix[y][x] == 0){
-              matrix[y][x] = 2
+              matrix[y][x] = 4
              let bomb = new Bomb(x,y)
              bombArr.push(bomb)
         }
@@ -211,21 +211,6 @@ function AddBomb(){
 }
 
 
-function AddBomb(){
-    for(let i = 0;  i < 7; i++){
-        let x = Math.floor(Math.random() * matrix.length)
-        let y = Math.floor(Math.random() * matrix.length)
-
-        if(matrix[y][x] == 0){
-              matrix[y][x] = 2
-             let bomb = new Bomb(x,y)
-             bombArr.push(bomb)
-        }
-
-    }
-    io.sockets.emit("emit matrix", matrix)
-
-}
 
 function AddPiranhaFlower(){
     for(let i = 0;  i < 7; i++){
@@ -233,7 +218,7 @@ function AddPiranhaFlower(){
         let y = Math.floor(Math.random() * matrix.length)
 
         if(matrix[y][x] == 0){
-              matrix[y][x] = 2
+              matrix[y][x] = 5
              let piranhaFlower = new PiranhaFlower(x,y)
              piranhaFlowerArr.push(piranhaFlower)
         }
@@ -249,7 +234,7 @@ function AddPredator(){
         let y = Math.floor(Math.random() * matrix.length)
 
         if(matrix[y][x] == 0){
-              matrix[y][x] = 2
+              matrix[y][x] = 3
              let predator = new Predator(x,y)
              predatorArr.push(predator)
         }
@@ -281,21 +266,9 @@ setInterval(function (){
 io.on("connection", function(socket){
     createObject(matrix)
     socket.on("addGrass", AddGrass)
-})
-io.on("connection", function(socket){
-    createObject(matrix)
     socket.on("addGrassEater", AddGrassEater)
-})
-io.on("connection", function(socket){
-    createObject(matrix)
     socket.on("addBomb", AddBomb)
-})
-io.on("connection", function(socket){
-    createObject(matrix)
     socket.on("addPiranhaFlower", AddPiranhaFlower)
-})
-io.on("connection", function(socket){
-    createObject(matrix)
     socket.on("addPredator", AddPredator)
-})
 
+})
