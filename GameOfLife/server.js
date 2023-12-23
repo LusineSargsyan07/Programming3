@@ -3,6 +3,7 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var fs = require('fs');
+const { kill } = require('process');
 
 app.use(express.static("."));
 
@@ -74,14 +75,9 @@ function matrixGeneration(matrixSize, grassCount, grassEaterCount, predatorCount
     }
     return matrix
 }
+matrix = matrixGeneration(30, 60, 20, 5, 10, 10)
 
-
-matrix = matrixGeneration(40, 60, 20, 5, 10, 10)
-
-
-io.sockets.emit("emit matrix", matrix)
-
-// charactor Arrays
+io.sockets.emit("send matrix", matrix)
 
 grassArr = [];
 grassEaterArr = [];
@@ -89,21 +85,17 @@ predatorArr = [];
 bombArr = [];
 piranhaFlowerArr = [];
 
-
-//  modules
-
 let Grass = require("./grass")
 let GrassEater = require("./grassEater")
 let Predator = require("./predator")
 let Bomb = require("./bomb")
 let PiranhaFlower = require("./piranhaFlower");
-const { log } = require("console");
 
 function createObject(matrix) {
     for (let y = 0; y < matrix.length; y++) {
         for (let x = 0; x < matrix[y].length; x++) {
-            if (matrix[y][x] == 1) {
 
+            if (matrix[y][x] == 1) {
                 let grass = new Grass(x, y)
                 grassArr.push(grass)
             } else if (matrix[y][x] == 2) {
@@ -112,7 +104,6 @@ function createObject(matrix) {
                 grassEaterArr.push(grEat)
 
             } else if (matrix[y][x] == 3) {
-
                 let pred = new Predator(x, y)
                 predatorArr.push(pred)
 
@@ -131,12 +122,17 @@ function createObject(matrix) {
 
     }
 
-    io.sockets.emit("emit matrix", matrix)
+    io.sockets.emit("send matrix", matrix)
 
 }
 
 function game() {
+
+
     for (let i in grassArr) {
+        if (grassArr.length == 0) {
+            break
+        }
         grassArr[i].mull()
     }
     for (let i in grassEaterArr) {
@@ -155,7 +151,7 @@ function game() {
         piranhaFlowerArr[i].eat()
     }
 
-    io.sockets.emit("emit matrix", matrix)
+    io.sockets.emit("send matrix", matrix)
 
 }
 
@@ -182,6 +178,20 @@ function Autumn() {
     io.sockets.emit("Autumn", weath);
 }
 
+function Kill() {
+    grassArr = [];
+    grassEaterArr = [];
+    predatorArr = [];
+    bombArr = [];
+    piranhaFlowerArr = [];
+    for (var y = 0; y < matrix.length; y++) {
+        for (var x = 0; x < matrix[y].length; x++) {
+            matrix[y][x] = 0;
+        }
+    }
+    io.sockets.emit("send matrix", matrix);
+}
+
 function AddGrass() {
     for (let i = 0; i < 7; i++) {
         let x = Math.floor(Math.random() * matrix.length)
@@ -194,8 +204,7 @@ function AddGrass() {
         }
 
     }
-    io.sockets.emit("emit matrix", matrix)
-
+    io.sockets.emit("send matrix", matrix)
 }
 
 function AddGrassEater() {
@@ -210,8 +219,7 @@ function AddGrassEater() {
         }
 
     }
-    io.sockets.emit("emit matrix", matrix)
-
+    io.sockets.emit("send matrix", matrix)
 }
 
 
@@ -227,11 +235,8 @@ function AddBomb() {
         }
 
     }
-    io.sockets.emit("emit matrix", matrix)
-
+    io.sockets.emit("send matrix", matrix)
 }
-
-
 
 function AddPiranhaFlower() {
     for (let i = 0; i < 7; i++) {
@@ -245,8 +250,7 @@ function AddPiranhaFlower() {
         }
 
     }
-    io.sockets.emit("emit matrix", matrix)
-
+    io.sockets.emit("send matrix", matrix)
 }
 
 function AddPredator() {
@@ -261,15 +265,11 @@ function AddPredator() {
         }
 
     }
-    io.sockets.emit("emit matrix", matrix)
-
+    io.sockets.emit("send matrix", matrix)
 }
 
 var statistics = {
-
-
 }
-
 setInterval(function () {
 
     statistics.grass = grassArr.length
@@ -280,21 +280,21 @@ setInterval(function () {
     statistics.bomb = bombArr.length
 
     fs.writeFile("statistics.json", JSON.stringify(statistics), function (err) {
-        // console.log("game of life statistics")
+        console.log("game of life statistics")
     })
 }, 1000)
 
 io.on("connection", function (socket) {
     createObject(matrix)
-    
+
     socket.on("spring", Spring);
     socket.on("summer", Summer);
     socket.on("autumn", Autumn);
     socket.on("winter", Winter);
-    socket.on("addGrass", AddGrass)
-    socket.on("addGrassEAter", AddGrassEater)
-    socket.on("addBomb", AddBomb)
-    socket.on("addPiranhaFlower", AddPiranhaFlower)
-    socket.on("addPredator", AddPredator)
-
+    socket.on("addGrass", AddGrass);
+    socket.on("addGrassEAter", AddGrassEater);
+    socket.on("killAll", Kill);
+    socket.on("addBomb", AddBomb);
+    socket.on("addPiranhaFlower", AddPiranhaFlower);
+    socket.on("addPredator", AddPredator);
 })

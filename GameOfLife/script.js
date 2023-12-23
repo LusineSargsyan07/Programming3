@@ -1,13 +1,9 @@
 var socket = io()
 let side = 25
 
-function setup() {
-    createCanvas(40 * side, 40 * side)
-
-}
 
 function setup() {
-    createCanvas(40 * side, 40 * side);
+    createCanvas(30 * side, 30 * side);
     background("#acacac");
 }
 socket.on("Winter", function (data) {
@@ -27,7 +23,10 @@ function nkarel(matrix) {
 
     for (let y = 0; y < matrix.length; y++) {
         for (let x = 0; x < matrix[y].length; x++) {
+           
             if (matrix[y][x] == 1) {
+            fill("darkgreen");
+
                 if (weath == "spring") {
                     fill("darkgreen");
                 }
@@ -40,8 +39,6 @@ function nkarel(matrix) {
                 if (weath == "winter") {
                     fill("#ffffff");
                 }
-
-                fill("green")
 
             } else if (matrix[y][x] == 2) {
 
@@ -69,7 +66,7 @@ function nkarel(matrix) {
 
 }
 
-socket.on("emit matrix", nkarel)
+socket.on("send matrix", nkarel)
 
 function Winter() {
     socket.emit("winter");
@@ -102,4 +99,8 @@ function AddBomb() {
 
 function AddPiranhaFlower() {
     socket.emit("addPiranhaFlower")
+}
+
+function KillAll(){
+    socket.emit("killAll");
 }
